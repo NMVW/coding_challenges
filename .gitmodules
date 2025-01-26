@@ -28,3 +28,6 @@
 [submodule "huddlehq/tech-test-master"]
 	path = huddlehq/tech-test-master
 	url = git@github.com:NMVW/huddlehq.git
+[submodule "launch_pad/challenge"]
+	path = launch_pad/challenge
+	url = git@github.com:NMVW/launch_pad.git
