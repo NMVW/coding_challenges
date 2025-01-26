@@ -22,3 +22,6 @@
 [submodule "rize/atm-demo"]
 	path = rize/atm-demo
 	url = git@github.com:NMVW/atm-demo.git
+[submodule "eatn/app"]
+	path = eatn/app
+	url = git@github.com:NMVW/eatn.git
