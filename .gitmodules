@@ -31,3 +31,6 @@
 [submodule "launch_pad/challenge"]
 	path = launch_pad/challenge
 	url = git@github.com:NMVW/launch_pad.git
+[submodule "mapn/mapn"]
+	path = mapn/mapn
+	url = git@github.com:NMVW/mapn.git
