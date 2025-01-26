@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./public/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["es5", "es6", "es2017", "dom"],
+    "jsx": "react",
+    "allowJs": true,
+    "types": ["node"],
+    "paths": {
+      "services": ["src/app/services/"],
+      "components": ["src/app/components/"],
+      "utils": ["src/app/utils"]
+    }
+  },
+  "include": ["./src/**/*"]
+}

@@ -1,0 +1,203 @@
+var _ = require('underscore');
+
+/// MORNING INTERVIEW
+
+/* 
+Your previous Plain Text content is preserved below:
+
+The goal of this exercise is to implement the war card game.
+If you're not familiar, these are the rules to the game
+
+One deck of 52 cards is shuffled and distributed evenly among two players.
+At each round, both players pull a card from the top of the deck. Highest value wins both cards, add to bottom of winner's deck.
+The one who ends up with all the cards win.
+
+
+If both players topdeck the same cards, then both players pull 3 more cards and place them in the middle.
+A fourth card is then pulled and used to compare.
+The winner takes all the cards pulled.
+ */
+
+// deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+class CardWarGame {
+  
+  constructor () {
+    // create players
+    // divy up the deck
+    const suite = _.range(1, 14);
+    this._deck = _.shuffle(suite.concat(suite).concat(suite).concat(suite));
+    
+    this._user1 = new Player('user1', []);
+    this._user2 = new Player('user2', []);
+  }
+  
+  deal () {
+    // console.log(this._user1._hand, this._user2._hand);
+    this._user1.winCards(...this._deck.slice(0, 26));
+    this._user2.winCards(...this._deck.slice(26));
+    console.log(this._user1._hand, this._user2._hand);
+  }
+  
+  _hasWon () {
+    let winner = null;
+    // console.log('game state', this._user1, this._user2);
+    if (this._user1.count === 52) winner = this._user1.name;
+    if (this._user2.count === 52) winner = this._user2.name;
+    if (winner) return winner;
+  }
+  
+  start () {
+    let winner = null;
+    while (typeof winner !== 'string') {
+      winner = this._play();
+    }
+    console.log('Winner', winner, this._user1, this._user2);
+    return winner;
+  }
+  
+  _play () {
+  
+    let card1 = this._user1.pull();
+    let card2 = this._user2.pull();
+    
+    // player 2 wins cards
+    if (card1 < card2) {
+      this._user2.winCards(card1, card2);
+    }
+    // player 1 wins cards
+    if (card1 > card2) {
+      this._user1.winCards(card1, card2);
+    }
+    
+    // tie break stakes
+    let stakes = [];
+    let stakeWinner = null;
+
+    // tie condition
+    while ((card1 === card2) && !stakeWinner) {
+      // tie break until cards exhausted
+      stakes.push(this._user1.tieStakes());
+      stakes.push(this._user2.tieStakes());
+
+      // tie break?
+      card1 = this._user1.pull();
+      card2 = this._user2.pull();
+
+      // TODO: both users could theoretically have no cards at same time
+      if (card1 === undefined) return this._user2.name;
+      if (card2 === undefined) return this._user1.name;
+
+      if (card1 < card2) stakeWinner = this._user2.name;
+      if (card1 > card2) stakeWinner = this._user1.name;      
+    }
+    
+    if (stakes.length) this['_' + stakeWinner].winCards(stakes);
+
+    // check whose won?
+    return this._hasWon(); // when string value, game ends!
+  }
+}
+
+class Player {
+
+  constructor (name, cards) {
+    this.name = name;
+    this._hand = cards;
+  }
+  
+  get count () {
+    return this._hand.length;
+  }
+
+  winCards (...cards) {
+    this._hand.push(...cards);
+  }
+
+  pull () {
+    return this._hand.pop();
+  }
+
+  tieStakes () {
+    return [this.pull(), this.pull(), this.pull()];
+  }
+}
+
+const game = new CardWarGame();
+game.deal();
+game.start();
+
+/// AFTERNOON INTERVIEW
+
+var _ = require('underscore');
+
+/* 
+
+Your previous Plain Text content is preserved below:
+
+Write a function to ensure a string of parenthesis is correctly nested
+
+((())) -> true
+()) - > false
+(){}[] -> true
+[({)]} -> false
+[{()]} -> false
+
+
+ */
+
+function isBalanced (str) {
+  
+  const openingTypes = {
+    '(': ')',
+    '[': ']',
+    '{': '}'
+  };
+
+  const openings = []; // '(', '(', ...
+  
+  if (!str.length) return true;
+
+  for (let i=0; i < str.length; i++) {
+
+    // console.log(openings, str[i]);
+
+    let open = str[i]; // (){}[]
+    
+    if (openingTypes[open]) openings.push(open);
+
+    // we are at a close "open" should be "close"
+    if (!openingTypes[open]) {
+      let close = openingTypes[openings[openings.length - 1]];
+
+      // console.log(open, close);
+      if (open !== close) {
+        return false;
+      } else {
+        // console.log("POP TIME");
+        let open = openings.pop(); // ()
+        if (open === undefined) return false;
+      }
+    }
+  }
+
+  return !openings.length;
+}
+
+
+const ex1 = '((()))'; // true
+const ex2 = '())'; //false
+const ex3 = '';
+
+const ex4 = '(){}[]'; // true
+const ex5 = '[({)]}'; // false
+const ex6 = '[1+2(3*2))'; // false
+
+
+
+console.log(isBalanced(ex1))
+console.log(isBalanced(ex2))
+console.log(isBalanced(ex3))
+console.log(isBalanced(ex4))
+console.log(isBalanced(ex5))
+console.log(isBalanced(ex6))

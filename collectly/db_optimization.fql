@@ -1,0 +1,65 @@
+/*We have a table in relational DB
+- where every row may contain a link to the ancestor in the same table
+- representing a tree-like structure.
+
+For example
+-- files(id, name, parent_id), where parent_id - is a foreign key to files(id).
+
+Please write a SQL query that fetches all leaves in this tree.
+
+Files
+id: str
+name: str
+parent_id: NULL str FK (Files)
+
+
+Root
+parent_id NULL
+
+Child
+parent_id NOT NULL
+
+Leaf
+no children beneath (no FKs are pointing to the instance)
+
+
+
+Files {
+    compute by_NoChildren: otherFile => otherFile.parent_id == file.id).count() > 0
+}
+
+
+// iterate over every instance of File
+O(n) x O(n) ~ O(n^2)
+*/
+// pre-compute
+let notLeaves = Set()
+
+// keep O(n) by caching visits to file nodes
+let leaves = Files.where(file => {
+    
+    // determine if the current file instance has any references to it from any other file instances
+    // assumption: no cycles self-referencing FKs
+
+    // O(n)
+    if (notLeaves.has(file.id)) {
+        // do not check - exit execution do not run predicate O(n) below
+        False
+    }
+
+    let hasChildren = Files.where(otherFile => otherFile.parent_id == file.id).count() > 0
+
+    // aggregate the nonLeaves to save on future checks
+    notLeaves.add(file.id)
+
+    // Files.by_NoChildren()
+
+    if (hasChildren) {
+        // not a leaf
+        False
+    } else {
+        True
+    }
+})
+
+leaves
