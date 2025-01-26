@@ -1,0 +1,24 @@
+[submodule "netapp/front-end-code-test 2"]
+	path = netapp/front-end-code-test 2
+	url = git@bitbucket.org:nickvinson/front-end-code-test.git
+[submodule "netapp/front-end-code-test"]
+	path = netapp/front-end-code-test
+	url = ssh://git@bitbucket.org/solidfire/front-end-code-test.git
+[submodule "mapn/ufteam"]
+	path = mapn/ufteam
+	url = git@bitbucket.org:NMVW/mapnwebapp.git
+[submodule "openbase/repovis"]
+	path = openbase/repovis
+	url = git@github.com:NMVW/repovis.git
+[submodule "gryps/gryps-react-test"]
+	path = gryps/gryps-react-test
+	url = git@github.com:gryps-io/gryps-react-test.git
+[submodule "windfall/reddit"]
+	path = windfall/reddit
+	url = git@github.com:NMVW/reddit-feed-demo.git
+[submodule "finch/hnscraper"]
+	path = finch/hnscraper
+	url = git@github.com:NMVW/hnscraper.git
+[submodule "rize/atm-demo"]
+	path = rize/atm-demo
+	url = git@github.com:NMVW/atm-demo.git
