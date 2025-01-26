@@ -25,3 +25,6 @@
 [submodule "eatn/app"]
 	path = eatn/app
 	url = git@github.com:NMVW/eatn.git
+[submodule "huddlehq/tech-test-master"]
+	path = huddlehq/tech-test-master
+	url = git@github.com:NMVW/huddlehq.git
